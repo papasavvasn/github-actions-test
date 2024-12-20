@@ -1,6 +1,7 @@
 const http = require("http");
 
 const requestListener = function (req, res) {
+  console.log(`Received request: ${req.method} ${req.url}`);
   if (req.method === "POST") {
     let body = "";
     req.on("data", (chunk) => {
