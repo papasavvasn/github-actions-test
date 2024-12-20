@@ -28,9 +28,9 @@ jobs:
           echo "Server is running..."
           sleep 5  # Give the server some time to start
 
-      - name: Send test POST request
+      - name: Send repository_dispatch payload to server
         run: |
-          curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"event_type": "contentful-sync", "client_payload": {"key": "holla"}}'
+          curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d '${{ toJson(github.event) }}'
 
       - name: Display server logs
         run: cat server.log
