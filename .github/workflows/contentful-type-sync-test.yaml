@@ -18,7 +18,7 @@ jobs:
 
       - name: Run server to log POST request
         run: |
-          node server.js | tee server.log &
+          nohup node server.js > server.log 2>&1 &
           echo "Server is running..."
           sleep 5  # Give the server some time to start
 
