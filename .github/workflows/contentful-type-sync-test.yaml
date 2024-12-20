@@ -11,6 +11,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Run server to log POST request
+        run: |
+          node server.js &
+          echo "Server is running..."
+          sleep 5  # Give the server some time to start
+
       - name: Run Contentful Type Sync
         run: |
           echo "Running Contentful Type Sync..."
