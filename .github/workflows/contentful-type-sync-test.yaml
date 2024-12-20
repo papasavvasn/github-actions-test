@@ -30,7 +30,7 @@ jobs:
 
       - name: Send repository_dispatch payload to server
         run: |
-          curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d '${{ toJson(github.event) }}'
+          curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d '${{ toJson(github.event.client_payload) }}'
 
       - name: Display server logs
         run: cat server.log
