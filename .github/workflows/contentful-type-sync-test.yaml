@@ -18,7 +18,7 @@ jobs:
 
       - name: Run server to log POST request
         run: |
-          node server.js &
+          node server.js | tee server.log &
           echo "Server is running..."
           sleep 5  # Give the server some time to start
 
@@ -26,3 +26,6 @@ jobs:
         run: |
           echo "Running Contentful Type Sync..."
           # Add your sync logic here
+
+      - name: Display server logs
+        run: cat server.log
