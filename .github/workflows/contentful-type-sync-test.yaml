@@ -1,0 +1,17 @@
+name: contentful-type-sync-test
+on:
+  repository_dispatch:
+    types: [contentful-sync]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Contentful Type Sync
+        run: |
+          echo "Running Contentful Type Sync..."
+          # Add your sync logic here
