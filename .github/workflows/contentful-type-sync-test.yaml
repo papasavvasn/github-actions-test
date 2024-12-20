@@ -31,6 +31,7 @@ jobs:
       - name: Send repository_dispatch payload to server
         run: |
           payload=$(echo '${{ toJson(github.event.client_payload) }}' | jq -c .)
+          echo "Sending payload: $payload"
           curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d "$payload"
 
       - name: Display server logs
