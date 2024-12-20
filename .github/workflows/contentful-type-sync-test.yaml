@@ -16,6 +16,12 @@ jobs:
         with:
           node-version: "14"
 
+      - name: Log repository_dispatch payload
+        run: |
+          echo "Received repository_dispatch event"
+          echo "Event type: ${{ github.event.action }}"
+          echo "Client payload: ${{ toJson(github.event.client_payload) }}"
+
       - name: Run server to log POST request
         run: |
           nohup node server.js > server.log 2>&1 &
@@ -24,12 +30,7 @@ jobs:
 
       - name: Send test POST request
         run: |
-          curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"test": "data"}'
-
-      - name: Run Contentful Type Sync
-        run: |
-          echo "Running Contentful Type Sync..."
-          # Add your sync logic here
+          curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"event_type": "contentful-sync", "client_payload": {"key": "holla"}}'
 
       - name: Display server logs
         run: cat server.log
