@@ -25,6 +25,15 @@ jobs:
           restore-keys: |
             Contentful-cache
 
+      - name: Log cache contents if exists
+        run: |
+          if [ -f cache.json ]; then
+            echo "Cache file exists. Contents:"
+            cat cache.json
+          else
+            echo "Cache file does not exist."
+          fi
+
       - name: Run server to log POST request
         run: |
           node server.js | tee server.log &
