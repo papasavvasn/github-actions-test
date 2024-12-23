@@ -21,9 +21,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: cache.json
-          key: ${{ runner.os }}-contentful-cache
+          key: Contentful-cache
           restore-keys: |
-            ${{ runner.os }}-contentful-cache
+            Contentful-cache
 
       - name: Run server to log POST request
         run: |
@@ -44,4 +44,4 @@ jobs:
         uses: actions/cache@v2
         with:
           path: cache.json
-          key: ${{ runner.os }}-contentful-cache
+          key: Contentful-cache

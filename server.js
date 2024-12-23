@@ -47,21 +47,21 @@ server.listen(8000, () => {
   console.log("Server is running on http://0.0.0.0:8000");
 });
 
-const contentfulContent = {
-  event_type: "contentful-sync",
-  client_payload: {
-    typeId: "cmsAboutUs",
-    text: [
-      {
-        id: "urlForBreadcrumb",
-        name: "urlForBreadcrumb",
-        type: "Text",
-        localized: false,
-        required: false,
-        validations: [],
-        disabled: false,
-        omitted: false,
-      },
-    ],
-  },
-};
+// const contentfulContent = {
+//   event_type: "contentful-sync",
+//   client_payload: {
+//     typeId: "cmsAboutUs",
+//     text: [
+//       {
+//         id: "urlForBreadcrumb",
+//         name: "urlForBreadcrumb",
+//         type: "Text",
+//         localized: false,
+//         required: false,
+//         validations: [],
+//         disabled: false,
+//         omitted: false,
+//       },
+//     ],
+//   },
+// };
