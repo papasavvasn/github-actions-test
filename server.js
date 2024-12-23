@@ -6,6 +6,11 @@ let cache = {};
 // Load cache from file if it exists
 if (fs.existsSync("cache.json")) {
   cache = JSON.parse(fs.readFileSync("cache.json", "utf8"));
+  if (!cache.counter) {
+    cache.counter = 0;
+  }
+} else {
+  cache.counter = 0;
 }
 
 const requestListener = function (req, res) {
@@ -24,9 +29,15 @@ const requestListener = function (req, res) {
         console.log("data after parsing the body", data);
         const typeId = data.client_payload.typeId;
         console.log("will store the object and cache", { "data.client_payload": data.client_payload });
-        // Store the object in the cache
-        cache[typeId] = data.client_payload.fields;
 
+        // Store the object in the cache
+        cache[typeId] = data.client_payload.text;
+
+        console.log("will increment the counter");
+        // Increment the counter
+        cache.counter += 1;
+
+        console.log({ counter: cache.counter });
         // Save the cache to a file
         fs.writeFileSync("cache.json", JSON.stringify(cache, null, 2));
 
@@ -48,22 +59,3 @@ const server = http.createServer(requestListener);
 server.listen(8000, () => {
   console.log("Server is running on http://0.0.0.0:8000");
 });
-
-// const contentfulContent = {
-//   event_type: "contentful-sync",
-//   client_payload: {
-//     typeId: "cmsAboutUs",
-//     text: [
-//       {
-//         id: "urlForBreadcrumb",
-//         name: "urlForBreadcrumb",
-//         type: "Text",
-//         localized: false,
-//         required: false,
-//         validations: [],
-//         disabled: false,
-//         omitted: false,
-//       },
-//     ],
-//   },
-// };
