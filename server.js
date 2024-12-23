@@ -6,7 +6,6 @@ let cache = {};
 // Load cache from file if it exists
 if (fs.existsSync("cache.json")) {
   cache = JSON.parse(fs.readFileSync("cache.json", "utf8"));
-  console.log("Loaded cache from file:", cache);
 }
 
 const requestListener = function (req, res) {

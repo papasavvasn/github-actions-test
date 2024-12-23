@@ -49,6 +49,10 @@ jobs:
       - name: Display server logs
         run: cat server.log
 
+      - name: Delete existing cache
+        run: |
+          rm -f cache.json
+
       - name: Save cache
         uses: actions/cache@v2
         with:
