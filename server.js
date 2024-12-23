@@ -7,9 +7,11 @@ let cache = {};
 if (fs.existsSync("cache.json")) {
   cache = JSON.parse(fs.readFileSync("cache.json", "utf8"));
   if (!cache.counter) {
+    console.log("Cache file exists but counter is missing. Resetting cache.");
     cache.counter = 0;
   }
 } else {
+  console.log("Cache Second if");
   cache.counter = 0;
 }
 
@@ -32,7 +34,7 @@ const requestListener = function (req, res) {
         console.log("will store the object and cache", "data.client_payload:", data.client_payload);
 
         // Store the object in the cache
-        cache[typeId] = data.client_payload.text;
+        cache[typeId] = data.client_payload.fields;
 
         console.log("will increment the counter");
         // Increment the counter
