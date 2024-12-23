@@ -37,7 +37,7 @@ const requestListener = function (req, res) {
         // Increment the counter
         cache.counter += 1;
 
-        console.log({ counter: cache.counter });
+        console.log("counter", cache.counter);
         // Save the cache to a file
         fs.writeFileSync("cache.json", JSON.stringify(cache, null, 2));
 
