@@ -18,17 +18,23 @@ const requestListener = function (req, res) {
     req.on("end", () => {
       console.log("Headers:", req.headers);
       console.log("Body:", body);
-      const data = JSON.parse(body);
-      const typeId = data.client_payload.typeId;
+      try {
+        const data = JSON.parse(body);
+        const typeId = data.client_payload.typeId;
 
-      // Store the object in the cache
-      cache[typeId] = data;
+        // Store the object in the cache
+        cache[typeId] = data;
 
-      // Save the cache to a file
-      fs.writeFileSync("cache.json", JSON.stringify(cache, null, 2));
+        // Save the cache to a file
+        fs.writeFileSync("cache.json", JSON.stringify(cache, null, 2));
 
-      res.writeHead(200);
-      res.end("Request logged and processed");
+        res.writeHead(200);
+        res.end("Request logged and processed");
+      } catch (error) {
+        console.error("Error processing request:", error);
+        res.writeHead(500);
+        res.end("Internal Server Error");
+      }
     });
   } else {
     res.writeHead(405);
