@@ -19,6 +19,7 @@ const requestListener = function (req, res) {
       console.log("Headers:", req.headers);
       console.log("Body:", body);
       try {
+        console.log("Will Parse the body");
         const data = JSON.parse(body);
         const typeId = data.client_payload.typeId;
         console.log("will store the object and cache", { "data.client_payload": data.client_payload });
