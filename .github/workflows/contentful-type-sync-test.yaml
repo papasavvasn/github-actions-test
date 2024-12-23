@@ -16,9 +16,18 @@ jobs:
         with:
           node-version: "14"
 
+      - name: Restore cache
+        id: cache-contentful
+        uses: actions/cache@v2
+        with:
+          path: cache.json
+          key: ${{ runner.os }}-contentful-cache
+          restore-keys: |
+            ${{ runner.os }}-contentful-cache
+
       - name: Run server to log POST request
         run: |
-          nohup node server.js > server.log 2>&1 &
+          node server.js | tee server.log &
           echo "Server is running..."
           sleep 5  # Give the server some time to start
 
@@ -30,3 +39,9 @@ jobs:
 
       - name: Display server logs
         run: cat server.log
+
+      - name: Save cache
+        uses: actions/cache@v2
+        with:
+          path: cache.json
+          key: ${{ runner.os }}-contentful-cache
