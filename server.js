@@ -6,6 +6,7 @@ let cache = {};
 // Load cache from file if it exists
 if (fs.existsSync("cache.json")) {
   cache = JSON.parse(fs.readFileSync("cache.json", "utf8"));
+  console.log("Loaded cache from file:", cache);
 }
 
 const requestListener = function (req, res) {
@@ -25,7 +26,7 @@ const requestListener = function (req, res) {
         const typeId = data.client_payload.typeId;
         console.log("will store the object and cache", { "data.client_payload": data.client_payload });
         // Store the object in the cache
-        cache[typeId] = data;
+        cache[typeId] = data.client_payload.fields;
 
         // Save the cache to a file
         fs.writeFileSync("cache.json", JSON.stringify(cache, null, 2));
