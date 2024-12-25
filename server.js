@@ -29,6 +29,21 @@ const requestListener = function (req, res) {
         console.log("data after parsing the body", data);
         const typeId = data.typeId;
 
+        // Compare incoming fields with cached fields and log changes
+        if (cache[typeId]) {
+          data.fields.forEach((field) => {
+            const cachedField = cache[typeId].find((f) => f.id === field.id);
+            if (cachedField) {
+              if (cachedField.omitted !== field.omitted) {
+                console.log(`Field ${field.id} omitted changed from ${cachedField.omitted} to ${field.omitted}`);
+              }
+              if (cachedField.disabled !== field.disabled) {
+                console.log(`Field ${field.id} disabled changed from ${cachedField.disabled} to ${field.disabled}`);
+              }
+            }
+          });
+        }
+
         // Store the object in the cache
         cache[typeId] = data.fields.map((field) => ({
           id: field.id,
