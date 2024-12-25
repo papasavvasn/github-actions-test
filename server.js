@@ -30,12 +30,17 @@ const requestListener = function (req, res) {
         const typeId = data.typeId;
 
         // Store the object in the cache
-        cache[typeId] = data.fields;
+        cache[typeId] = data.fields.map((field) => ({
+          id: field.id,
+          required: field.required,
+          ommited: field.omitted,
+          disabled: field.disabled,
+        }));
 
         // Increment the counter
         cache.counter += 1;
 
-        console.log("counter2", cache.counter);
+        console.log("counter", cache.counter);
         // Save the cache to a file
         fs.writeFileSync("cache.json", JSON.stringify(cache, null, 2));
 
