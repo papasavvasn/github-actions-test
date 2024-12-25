@@ -31,7 +31,9 @@ const requestListener = function (req, res) {
 
         // Compare incoming fields with cached fields and log changes
         if (cache[typeId]) {
+          console.log("cache[typeId]", cache[typeId]);
           data.fields.forEach((field) => {
+            console.log("field", field);
             const cachedField = cache[typeId].find((f) => f.id === field.id);
             if (cachedField) {
               if (cachedField.omitted !== field.omitted) {
@@ -52,6 +54,7 @@ const requestListener = function (req, res) {
           disabled: field.disabled,
         }));
 
+        console.log("cache[typeId] after storing the object in the cache", cache[typeId]);
         // Increment the counter
         cache.counter += 1;
 
