@@ -27,11 +27,10 @@ const requestListener = function (req, res) {
         console.log("Will Parse the body");
         const data = JSON.parse(body);
         console.log("data after parsing the body", data);
-        const typeId = data.client_payload.typeId;
-        console.log("will store the object and cache", { "data.client_payload": data.client_payload });
+        const typeId = data.typeId;
 
         // Store the object in the cache
-        cache[typeId] = data.client_payload.text;
+        cache[typeId] = data.fields;
 
         // Increment the counter
         cache.counter += 1;
