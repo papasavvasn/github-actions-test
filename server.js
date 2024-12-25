@@ -50,7 +50,7 @@ const requestListener = function (req, res) {
         cache[typeId] = data.fields.map((field) => ({
           id: field.id,
           required: field.required,
-          ommited: field.omitted,
+          omitted: field.omitted,
           disabled: field.disabled,
         }));
 
