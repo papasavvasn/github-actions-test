@@ -24,7 +24,7 @@ const triggerE2ETests = async () => {
   try {
     await axios.post(`https://api.github.com/repos/papasavvasn/github-actions-test/dispatches`, payload, {
       headers: {
-        Authorization: `token ${githubToken}`,
+        Authorization: `Bearer ${githubToken}`,
         "Content-Type": "application/json",
       },
     });
@@ -36,7 +36,6 @@ const triggerE2ETests = async () => {
 
 const requestListener = function (req, res) {
   console.log(`Received request: ${req.method} ${req.url}`);
-  console.log(`to:`, process.env.GITHUB_TOKEN);
   if (req.method === "POST") {
     let body = "";
     req.on("data", (chunk) => {
