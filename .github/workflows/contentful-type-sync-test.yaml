@@ -36,16 +36,15 @@ jobs:
           else
             echo "Cache file does not exist."
           fi
-
       - name: Log GitHub token (masked)
         env:
-          GITHUB_TOKEN: ${{ secrets.test_token_for_contentful_post_webhook }}
+          GITHUB_TOKEN: ${{ secrets.TEST_TOKEN_FOR_CONTENTFUL_POST_WEBHOOK }}
         run: |
           echo "GitHub token starts with: ${GITHUB_TOKEN:0:4}****"
 
       - name: Run server to log POST request
         env:
-          GITHUB_TOKEN: ${{ secrets.test_token_for_contentful_post_webhook }}
+          GITHUB_TOKEN: ${{ secrets.TEST_TOKEN_FOR_CONTENTFUL_POST_WEBHOOK }}
         run: |
           node server.js | tee server.log &
           echo "Server is running..."
