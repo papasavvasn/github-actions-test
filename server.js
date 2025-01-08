@@ -34,12 +34,18 @@ const requestListener = function (req, res) {
           data.fields.forEach((field) => {
             const cachedField = cache[typeId].find((f) => f.id === field.id);
             if (cachedField) {
-              if (cachedField.omitted !== field.omitted) {
+              if (cachedField.omitted === false && field.omitted === true) {
                 console.log(`Field ${field.id} omitted changed from ${cachedField.omitted} to ${field.omitted}`);
               }
-              if (cachedField.disabled !== field.disabled) {
-                console.log(`Field ${field.id} disabled changed from ${cachedField.disabled} to ${field.disabled}`);
-              }
+            }
+          });
+          // Check for removed fields
+          cache[typeId].forEach((cachedField) => {
+            const incomingField = data.fields.find((f) => f.id === cachedField.id);
+            if (!incomingField) {
+              console.log(
+                `Field ${cachedField.id} has been removed from Content Type ${typeId}. This is a potential breaking change.`
+              );
             }
           });
         }
