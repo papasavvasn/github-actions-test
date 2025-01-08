@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs");
+const axios = require("axios");
 
 let cache = {};
 
@@ -12,6 +13,26 @@ if (fs.existsSync("cache.json")) {
 } else {
   cache.counter = 0;
 }
+
+const triggerE2ETests = async () => {
+  const githubToken = process.env.test_token_for_contentful_post_webhook;
+
+  const payload = {
+    event_type: "trigger-e2e-tests",
+  };
+
+  try {
+    await axios.post(`https://api.github.com/repos/papasavvasn/github-actions-test/dispatches`, payload, {
+      headers: {
+        Authorization: `token ${githubToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(`Triggered E2E tests`);
+  } catch (error) {
+    console.error("Error triggering E2E tests:", error);
+  }
+};
 
 const requestListener = function (req, res) {
   console.log(`Received request: ${req.method} ${req.url}`);
@@ -36,6 +57,7 @@ const requestListener = function (req, res) {
             if (cachedField) {
               if (cachedField.omitted === false && field.omitted === true) {
                 console.log(`Field ${field.id} omitted changed from ${cachedField.omitted} to ${field.omitted}`);
+                triggerE2ETests();
               }
             }
           });
@@ -46,6 +68,7 @@ const requestListener = function (req, res) {
               console.log(
                 `Field ${cachedField.id} has been removed from Content Type ${typeId}. This is a potential breaking change.`
               );
+              triggerE2ETests();
             }
           });
         }

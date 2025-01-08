@@ -1,0 +1,13 @@
+name: Test Dispatch
+
+on:
+  repository_dispatch:
+    types: [trigger-e2e-tests]
+
+jobs:
+  test-dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log message
+        run: echo "Repository dispatch event received!"
