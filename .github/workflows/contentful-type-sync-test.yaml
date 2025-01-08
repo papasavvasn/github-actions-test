@@ -37,6 +37,12 @@ jobs:
             echo "Cache file does not exist."
           fi
 
+      - name: Log GitHub token (masked)
+        env:
+          GITHUB_TOKEN: ${{ secrets.test_token_for_contentful_post_webhook }}
+        run: |
+          echo "GitHub token starts with: ${GITHUB_TOKEN:0:4}****"
+
       - name: Run server to log POST request
         env:
           GITHUB_TOKEN: ${{ secrets.test_token_for_contentful_post_webhook }}
