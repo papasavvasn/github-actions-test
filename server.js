@@ -36,6 +36,7 @@ const triggerE2ETests = async () => {
 
 const requestListener = function (req, res) {
   console.log(`Received request: ${req.method} ${req.url}`);
+  console.log(`to:`, process.env.GITHUB_TOKEN);
   if (req.method === "POST") {
     let body = "";
     req.on("data", (chunk) => {
