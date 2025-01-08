@@ -52,7 +52,7 @@ jobs:
         run: cat server.log
 
       - name: Save cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: cache.json
           key: Contentful-cache-${{ github.run_id }}
