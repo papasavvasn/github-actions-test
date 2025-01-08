@@ -35,6 +35,8 @@ jobs:
           fi
 
       - name: Run server to log POST request
+        env:
+          GITHUB_TOKEN: ${{ secrets.test_token_for_contentful_post_webhook }}
         run: |
           node server.js | tee server.log &
           echo "Server is running..."

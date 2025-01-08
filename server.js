@@ -15,7 +15,7 @@ if (fs.existsSync("cache.json")) {
 }
 
 const triggerE2ETests = async () => {
-  const githubToken = process.env.test_token_for_contentful_post_webhook;
+  const githubToken = process.env.GITHUB_TOKEN;
 
   const payload = {
     event_type: "trigger-e2e-tests",
