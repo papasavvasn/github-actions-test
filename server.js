@@ -66,7 +66,7 @@ const requestListener = function (req, res) {
             const incomingField = data.fields.find((f) => f.id === cachedField.id);
             if (!incomingField) {
               console.log(
-                `Field ${cachedField.id} has been removed from Content Type ${typeId}. This is a potential breaking change.`
+                `Field ${cachedField.id} has been removed from Content Type ${typeId}. This can introduce a breaking change`
               );
               triggerE2ETests();
             }
