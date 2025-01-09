@@ -58,7 +58,9 @@ const requestListener = function (req, res) {
             const cachedField = cache[typeId].find((f) => f.id === field.id);
             if (cachedField) {
               if (cachedField.omitted === false && field.omitted === true) {
-                console.log(`Field ${field.id} omitted changed from ${cachedField.omitted} to ${field.omitted}`);
+                console.log(
+                  `Field ${field.id} omitted changed from ${cachedField.omitted} to ${field.omitted}. This can introduce a breaking change`
+                );
                 triggerE2ETests();
               }
             }
