@@ -65,6 +65,29 @@ const requestListener = function (req, res) {
                 );
                 triggerE2ETests();
               }
+
+              // Track changes in linkContentType array
+              if (field.items && field.items.validations) {
+                const cachedValidations = cachedField.items?.validations || [];
+                const incomingValidations = field.items.validations;
+
+                cachedValidations.forEach((cachedValidation, index) => {
+                  const incomingValidation = incomingValidations[index];
+                  if (cachedValidation.linkContentType && incomingValidation.linkContentType) {
+                    const cachedLinkContentType = cachedValidation.linkContentType;
+                    const incomingLinkContentType = incomingValidation.linkContentType;
+
+                    if (JSON.stringify(cachedLinkContentType) !== JSON.stringify(incomingLinkContentType)) {
+                      console.log(
+                        `Field ${field.id} linkContentType changed from ${JSON.stringify(
+                          cachedLinkContentType
+                        )} to ${JSON.stringify(incomingLinkContentType)}`
+                      );
+                      triggerE2ETests();
+                    }
+                  }
+                });
+              }
             }
           });
           // Check for removed fields
