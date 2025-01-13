@@ -108,6 +108,7 @@ const requestListener = function (req, res) {
           required: field.required,
           omitted: field.omitted,
           disabled: field.disabled,
+          items: field.items,
         }));
 
         console.log("cache[typeId]", cache[typeId]);
