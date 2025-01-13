@@ -18,14 +18,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install axios
-      - name: Remove existing cache if exists
-        run: |
-          if [ -f cache.json ]; then
-            echo "Removing existing cache file."
-            rm cache.json
-          else
-            echo "No cache file to remove."
-          fi
 
       - name: Restore cache
         id: cache-contentful
