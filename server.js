@@ -53,6 +53,8 @@ const requestListener = function (req, res) {
         const typeId = data.typeId;
 
         // Compare incoming fields with cached fields and log changes
+        console.log("cache is:", cache);
+        console.log("cache[typeId]", cache[typeId]);
         if (cache[typeId]) {
           data.fields.forEach((field) => {
             const cachedField = cache[typeId].find((f) => f.id === field.id);
