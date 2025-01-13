@@ -85,6 +85,8 @@ const requestListener = function (req, res) {
           disabled: field.disabled,
         }));
 
+        console.log("cache[typeId]", cache[typeId]);
+
         // Increment the counter
         cache.counter += 1;
 
