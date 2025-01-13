@@ -95,7 +95,7 @@ const requestListener = function (req, res) {
         console.log("counter", cache.counter);
         console.log("cache after storing the object in the cache", cache);
         // Save the cache to a file
-        fs.writeFileSync("cache.json", JSON.stringify(cache, null, 2));
+        fs.writeFileSync("cache.json", JSON.stringify({}, null, 2));
 
         res.writeHead(200);
         res.end("Request logged and processed");
