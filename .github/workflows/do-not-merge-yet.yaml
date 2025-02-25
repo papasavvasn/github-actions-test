@@ -10,7 +10,7 @@ on:
       - "**.md"
       - "**/documentation/**"
       - "CNAME*"
-
+jobs:
   # New label check job first
   CheckDisallowedLabels:
     runs-on: ubuntu-latest
