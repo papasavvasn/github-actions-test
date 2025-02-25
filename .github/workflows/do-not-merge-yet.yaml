@@ -1,4 +1,4 @@
-name: Prevent Merge
+name: Do Not Merge Yet
 
 on:
   pull_request:
@@ -22,3 +22,7 @@ jobs:
           echo "::error::PR has 'Do Not Merge Yet' or 'in-progress' label"
           echo "Please remove the label before merging"
           exit 1
+        # To run all the time and not just get skipped
+      - name: Success (no labels)
+        if: ${{ always() }}
+        run: echo "No disallowed labels found"
