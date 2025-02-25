@@ -3,12 +3,6 @@ name: Do Not Merge Yet
 on:
   pull_request:
     types: [opened, synchronize, reopened, labeled, unlabeled]
-    paths-ignore:
-      - "docs/**"
-      - "documentation/**"
-      - "**.md"
-      - "**/documentation/**"
-      - "CNAME*"
 
 jobs:
   CheckDisallowedLabels:
