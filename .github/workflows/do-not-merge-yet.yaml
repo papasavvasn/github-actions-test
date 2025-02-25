@@ -2,16 +2,27 @@ name: Do Not Merge Yet
 
 on:
   pull_request:
-    types: [synchronize, opened, reopened, labeled, unlabeled]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    paths-ignore:
+      - "docs/**"
+      - "documentation/**"
+      - "**.md"
+      - "**/documentation/**"
+      - "CNAME*"
 
 jobs:
-  do-not-merge:
-    if: ${{ contains(github.event.*.labels.*.name, 'Do Not Merge Yet') }}
-    name: Prevent Merging
+  CheckDisallowedLabels:
     runs-on: ubuntu-latest
+    if: |
+      github.event.action == 'labeled' || github.event.action == 'unlabeled' ||
+      contains(github.event.pull_request.labels.*.name, 'Do Not Merge Yet') ||
+      contains(github.event.pull_request.labels.*.name, 'in-progress')
     steps:
-      - name: Check for label
-        run: |
-          echo "Pull request is labeled as 'do not merge'"
-          echo "This workflow fails so that the pull request cannot be merged"
+      - run: |
+          echo "::error::PR has 'Do Not Merge Yet' or 'in-progress' label"
+          echo "Please remove the label before merging"
           exit 1
+        # To run all the time and not just get skipped
+      - name: Success (no labels)
+        if: ${{ always() }}
+        run: echo "No disallowed labels found"
