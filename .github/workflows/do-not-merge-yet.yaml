@@ -1,24 +1,22 @@
-name: Do Not Merge Yet
+name: Prevent Merge
 
 on:
-  workflow_call:
   pull_request:
-    types: [opened, synchronize, reopened, labeled, unlabeled] # Added label events
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     paths-ignore:
       - "docs/**"
       - "documentation/**"
       - "**.md"
       - "**/documentation/**"
       - "CNAME*"
+
 jobs:
-  # New label check job first
   CheckDisallowedLabels:
     runs-on: ubuntu-latest
-    # Only run for label events with specific labels
     if: |
-      github.event.action == 'labeled' || github.event.action == 'unlabeled'
-      && (contains(github.event.pull_request.labels.*.name, 'Do Not Merge Yet')
-      || contains(github.event.pull_request.labels.*.name, 'in-progress')
+      github.event.action == 'labeled' || github.event.action == 'unlabeled' ||
+      contains(github.event.pull_request.labels.*.name, 'Do Not Merge Yet') ||
+      contains(github.event.pull_request.labels.*.name, 'in-progress')
     steps:
       - run: |
           echo "::error::PR has 'Do Not Merge Yet' or 'in-progress' label"
