@@ -1,0 +1,22 @@
+name: Do Not Merge Yet
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  CheckDisallowedLabels:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.action == 'labeled' || github.event.action == 'unlabeled' ||
+      contains(github.event.pull_request.labels.*.name, 'Do Not Merge Yet') ||
+      contains(github.event.pull_request.labels.*.name, 'in-progress')
+    steps:
+      - run: |
+          echo "::error::PR has 'Do Not Merge Yet' or 'in-progress' label"
+          echo "Please remove the label before merging"
+          exit 1
+        # To run all the time and not just get skipped
+      - name: Success (no labels)
+        if: ${{ always() }}
+        run: echo "No disallowed labels found"

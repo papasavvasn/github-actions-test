@@ -53,6 +53,8 @@ const requestListener = function (req, res) {
         const typeId = data.typeId;
 
         // Compare incoming fields with cached fields and log changes
+        console.log("cache is:", cache);
+        console.log("cache[typeId]", cache[typeId]);
         if (cache[typeId]) {
           data.fields.forEach((field) => {
             const cachedField = cache[typeId].find((f) => f.id === field.id);
@@ -62,6 +64,29 @@ const requestListener = function (req, res) {
                   `Field ${field.id} omitted changed from ${cachedField.omitted} to ${field.omitted}. This can introduce a breaking change`
                 );
                 triggerE2ETests();
+              }
+
+              // Track changes in linkContentType array
+              if (field.items && field.items.validations) {
+                const cachedValidations = cachedField.items?.validations || [];
+                const incomingValidations = field.items.validations;
+
+                cachedValidations.forEach((cachedValidation, index) => {
+                  const incomingValidation = incomingValidations[index];
+                  if (cachedValidation.linkContentType && incomingValidation.linkContentType) {
+                    const cachedLinkContentType = cachedValidation.linkContentType;
+                    const incomingLinkContentType = incomingValidation.linkContentType;
+
+                    if (JSON.stringify(cachedLinkContentType) !== JSON.stringify(incomingLinkContentType)) {
+                      console.log(
+                        `Field ${field.id} linkContentType changed from ${JSON.stringify(
+                          cachedLinkContentType
+                        )} to ${JSON.stringify(incomingLinkContentType)}`
+                      );
+                      triggerE2ETests();
+                    }
+                  }
+                });
               }
             }
           });
@@ -83,7 +108,10 @@ const requestListener = function (req, res) {
           required: field.required,
           omitted: field.omitted,
           disabled: field.disabled,
+          items: field.items,
         }));
+
+        console.log("cache[typeId]", cache[typeId]);
 
         // Increment the counter
         cache.counter += 1;
